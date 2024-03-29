@@ -1,0 +1,20 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+  <id>com.github.madhattermonroe.rpi-link</id>
+  <name>RPI-Link</name>
+  <vendor email="pdiulin@yandex.ru" url="https://www.yourcompany.com">Pavel Diulin</vendor>
+
+  <depends>com.intellij.modules.platform</depends>
+  <resource-bundle>strings.RPI-Link-Bundle</resource-bundle>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <toolWindow factoryClass="com.github.madhattermonroe.rpilink.Entry" id="RPI-Link" anchor="right"
+                doNotActivateOnStart="true"/>
+
+    <projectConfigurable
+            parentId="tools"
+            instance="com.github.madhattermonroe.rpilink.core.connsettings.ConnSettingsConfigurable"
+            id="com.github.madhattermonroe.rpilink.core.connsettings.ConnSettingsConfigurable"
+            displayName="RPI-Link"/>
+  </extensions>
+</idea-plugin>
