@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies{
-    implementation("com.hierynomus:sshj:0.37.0")
+    implementation("com.jcraft:jsch:0.1.54")
 }
 
 // Configure Gradle IntelliJ Plugin

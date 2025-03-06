@@ -1,4 +1,4 @@
-package com.github.madhattermonroe.rpilink.core
+package com.github.madhattermonroe.rpilink
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.PropertyKey
@@ -13,8 +13,4 @@ object RPIBundle : DynamicBundle(BUNDLE) {
     @Suppress("unused")
     fun messagePointer(@PropertyKey(resourceBundle = BUNDLE) key: String, vararg params: Any) =
         getLazyMessage(key, *params)
-
-    fun unknownReason(): String {
-        return message("dialog.RemoteFileAccess.reason.unknown")
-    }
 }

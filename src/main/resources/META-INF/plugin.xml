@@ -2,7 +2,7 @@
 <idea-plugin>
   <id>com.github.madhattermonroe.rpi-link</id>
   <name>RPI-Link</name>
-  <vendor email="pdiulin@yandex.ru" url="https://www.yourcompany.com">Pavel Diulin</vendor>
+  <vendor email="pdiulin@yandex.ru" url="https://madhattermonroe.github.io">Pavel Diulin</vendor>
 
   <depends>com.intellij.modules.platform</depends>
   <resource-bundle>strings.RPI-Link-Bundle</resource-bundle>
@@ -13,8 +13,8 @@
 
     <projectConfigurable
             parentId="tools"
-            instance="com.github.madhattermonroe.rpilink.core.connsettings.ConnSettingsConfigurable"
-            id="com.github.madhattermonroe.rpilink.core.connsettings.ConnSettingsConfigurable"
+            instance="com.github.madhattermonroe.rpilink.ui.ConnectionSettingsConfigurable"
+            id="com.github.madhattermonroe.rpilink.ui.ConnectionSettingsConfigurable"
             displayName="RPI-Link"/>
   </extensions>
 </idea-plugin>
