@@ -1,7 +1,7 @@
 package com.github.madhattermonroe.rpilink.ui
 
 import com.github.madhattermonroe.rpilink.RPIBundle
-import com.github.madhattermonroe.rpilink.remote.RemoteOperations
+import com.github.madhattermonroe.rpilink.remote.SSHManager
 import com.github.madhattermonroe.rpilink.state.ConnectionSettingsState
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.project.Project
@@ -11,6 +11,7 @@ import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.ui.AnimatedIcon
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.ui.components.ActionLink
+import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBPasswordField
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.dsl.builder.COLUMNS_MEDIUM
@@ -35,6 +36,8 @@ class ConnectionSettingsPanel(private val project: Project) {
 
     private var testButton = JButton()
     private var disconnectButton = JButton()
+
+    private val autoConnectFlag: JBCheckBox = JBCheckBox()
 
     val panel: JPanel = panel {
         row {
@@ -72,12 +75,7 @@ class ConnectionSettingsPanel(private val project: Project) {
                     saveState()
                 }
 
-                if (RemoteOperations().startConnection(
-                        hostField.text,
-                        portField.text,
-                        usernameField.text,
-                        String(passwordField.password)
-                    )
+                if (SSHManager.connect(project)
                 ) {
                     loadingIcon?.visible(false)
                     okIcon?.visible(true)
@@ -97,8 +95,13 @@ class ConnectionSettingsPanel(private val project: Project) {
             }.visible(false)
 
             disconnectButton = button(RPIBundle.message("settings.RemoteFileAccess.disconnectLink.text")) {
-                RemoteOperations().disconnect()
+                SSHManager.disconnect()
             }.component
+        }
+
+        row {
+            label(RPIBundle.message("connectionConfig.label.autoConnect")).widthGroup(CONF_WIDTH_GROUP)
+            autoConnectFlag
         }
     }
 
@@ -116,7 +119,8 @@ class ConnectionSettingsPanel(private val project: Project) {
         conf.host = hostField.text.trim()
         conf.port = portField.text.toInt()
         conf.username = usernameField.text.trim()
-        conf.password = passwordField.password
+        conf.password = passwordField.password.joinToString("").trim()
+        conf.autoConnect = autoConnectFlag.isValid
     }
 
     fun isModified(): Boolean {

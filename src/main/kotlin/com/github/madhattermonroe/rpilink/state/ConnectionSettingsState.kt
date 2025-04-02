@@ -29,10 +29,20 @@ class ConnectionSettingsState : SimplePersistentStateComponent<ConnectionParams>
             state.username = value
         }
 
-    var password: CharArray = CharArray(0)
+    var password: String
+        get() = state.password ?: ""
+        set(value) {
+            state.password = value
+        }
+
+    var autoConnect: Boolean
+        get() = state.autoConnect ?: false
+        set(value) {
+            state.autoConnect = value
+        }
 
     private fun isValid(): Boolean {
-        return host.isNotEmpty() && username.isNotEmpty()
+        return host.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty()
     }
 
     fun isNotValid(): Boolean {

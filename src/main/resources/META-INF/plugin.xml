@@ -16,5 +16,9 @@
             instance="com.github.madhattermonroe.rpilink.ui.ConnectionSettingsConfigurable"
             id="com.github.madhattermonroe.rpilink.ui.ConnectionSettingsConfigurable"
             displayName="RPI-Link"/>
+
+    <notificationGroup id="ConnectionNotifications"
+                       displayType="BALLOON"
+                       key="notification.group.name"/>
   </extensions>
 </idea-plugin>

@@ -13,6 +13,7 @@ repositories {
 
 dependencies{
     implementation("com.jcraft:jsch:0.1.54")
+    implementation("org.knowm.xchart:xchart:3.8.1")
 }
 
 // Configure Gradle IntelliJ Plugin

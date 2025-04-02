@@ -1,34 +1,27 @@
 package com.github.madhattermonroe.rpilink.remote
 
-import com.jcraft.jsch.JSch
-import com.jcraft.jsch.Session
+import com.jcraft.jsch.ChannelExec
+import java.io.ByteArrayOutputStream
 
-class RemoteOperations {
-
-    private var session: Session? = null
-    private var isConnected: Boolean = false
-
-    fun startConnection(host: String, port: String, user: String, password: String): Boolean {
+object RemoteOperations {
+    fun executeCommand(command: String): String? {
         return try {
-            val jsch = JSch()
-            session = jsch.getSession(user, host, port.toInt()).apply {
-                setPassword(password)
-                setConfig("StrictHostKeyChecking", "no")
-                connect(5000)
+            val session = SSHManager.getSession() ?: return null
+            val channel = session.openChannel("exec") as ChannelExec
+            channel.setCommand(command)
+
+            val outputStream = ByteArrayOutputStream()
+            channel.outputStream = outputStream
+            channel.connect()
+
+            while (!channel.isClosed) {
+                Thread.sleep(100)
             }
-            isConnected = true
-            true
+
+            channel.disconnect()
+            outputStream.toString().trim()
         } catch (e: Exception) {
-            false
+            null
         }
-    }
-
-    fun getSession(): Session? {
-        return session
-    }
-
-    fun disconnect() {
-        isConnected = false
-        session?.disconnect()
     }
 }
